@@ -1,0 +1,5 @@
+NPM packages on which this app depends:
+
+- mocha
+- should
+- redis
