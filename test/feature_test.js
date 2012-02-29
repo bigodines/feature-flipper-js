@@ -6,7 +6,6 @@ var should = require('should'),
 describe('Feature', function() {
     it('feature_flipper::create_feature() must take option arguments', function() {
 	var good_feature = flipper().create_feature({id: 'my id', description: 'some nice feature'});
-	console.log(good_feature);
 	good_feature.id.should.equal('my id');
 
     });
