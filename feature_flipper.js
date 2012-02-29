@@ -67,10 +67,6 @@
 
 		    this.get_feature(feature_id, check_cb);
 		}
-		if (typeof feature == 'undefined') {
-		    return false;
-		}
-
 	    }
 	};
     };
