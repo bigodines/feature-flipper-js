@@ -73,12 +73,14 @@ describe('How Feature Flipper deals with features', function() {
 });
 
 /*integration tests*/
-describe('Feature Flipper check (integration)', function() {
+describe('Feature Flipper check (integration)', function(done) {
     it('should default to disable', function() {
 	var ff = flipper();
 	ff.storage = ff_redis;
-	var isEnabled = ff.check('i dont exist');
-	isEnabled.should.equal(false);
+	ff.check('i dont exist', function(isEnabled) {
+	    isEnabled.should.equal(false);
+	    done();
+	});
     });
 
     it('should check if feature is enabled globally when receives one argument', function(done) {
@@ -90,5 +92,9 @@ describe('Feature Flipper check (integration)', function() {
 	    result.should.equal(true);
 	    done();
 	} );
+    });
+
+    it('should be disabled to user id if feature is not enabled', function(done) {
+	done();
     });
 });
