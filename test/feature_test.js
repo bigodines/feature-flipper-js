@@ -1,11 +1,12 @@
 var should = require('should'),
-    flipper = require('../feature_flipper');
-    
+    flipper = require('../feature_flipper'),
+    ff_redis = require('../storage/ff_redis')();    
 
 
 describe('Feature', function() {
     it('feature_flipper::create_feature() must take option arguments', function() {
 	var good_feature = flipper().create_feature({id: 'my id', description: 'some nice feature'});
+	console.log(good_feature);
 	good_feature.id.should.equal('my id');
 
     });
@@ -71,64 +72,23 @@ describe('How Feature Flipper deals with features', function() {
     });
 });
 
-describe('Feature Flipper check', function() {
-    var StorageStub = {
-	set : function(id, data) { return data; },
-	del : function(id) { return 1; },
-	get : function(id) { 
-	    if (id == 'i dont exist') {
-		return null;
-	    }
-	    if (id == 'enabled_feature') {
-	    }
-	}
-    };
-
+/*integration tests*/
+describe('Feature Flipper check (integration)', function() {
     it('should default to disable', function() {
 	var ff = flipper();
-	ff.storage = StorageStub;
+	ff.storage = ff_redis;
 	var isEnabled = ff.check('i dont exist');
 	isEnabled.should.equal(false);
     });
 
-    /*integration tests*/
     it('should check if feature is enabled globally when receives one argument', function(done) {
 	var ff = flipper();
-	ff.storage = require('../storage/ff_redis')();
+	ff.storage = ff_redis;
 	var f = ff.create_feature({id : 'enabled_feature', description : 'enabled to everyone', enabledTo: 'all'});
 	ff.save(f);
 	ff.check('enabled_feature', function(result) {
-	    console.log(result);
 	    result.should.equal(true);
 	    done();
 	} );
-	// isEnabled = ff.check('disabled_feature');
-	// isEnabled.should.equal(false);
     });
-
 });
-
-/*
-
-usage brainstorm
-
-feature = flipper().create_feature({id: 1, description: 'nice'});
-feature.save();
-feature.enableToAll();
-feature.enableTo(guid);
-feature.check(guid);
-
-
-feature = feature_flipper.create_feature({...});
-
-feature_flipper.get_feature(feature_id);
-feature_flipper.check(feature, guid);
-feature_flipper.enable(feature, guid);
-feature_flipper.enable(feature);
-
-// phase 2
-
-feature_flipper.add_guid_to_group(guid, group);
-
-
-*/

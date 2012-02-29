@@ -16,16 +16,7 @@
 		throw new Error('a feature must have an id and description');
 	    }
 
-	    return {
-		enabled_to : function() { return true; }
-	    }
-
-	},
-
-	_done = function(result) {
-	    return result;
-	}
-
+	};
 	
 
 	/* Feature Flipper public methods */
