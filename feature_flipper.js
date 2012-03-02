@@ -53,20 +53,33 @@
 	    check : function(/* [ all optional params ], after_check_callback */) {
 		var feature, feature_id,
 		    argc = arguments.length, 
-		    isEnabled = false, check_cb, after_check;
+		    isEnabled = false, check_cb, after_check, check_against;
 		if (argc === 2) {
 		    feature_id = arguments[0];
 		    after_check = arguments[1];
 		    check_cb = function(feature) {
 			var is_enabled = false;
- 			if (feature.enabledTo == 'all') {
+ 			if (feature.enabledTo === 'all') {
 			    is_enabled = true;
 			};
 			after_check.call(this, is_enabled);
 		    };
 
-		    this.get_feature(feature_id, check_cb);
-		}
+		} else if (argc === 3) {
+		    feature_id = arguments[0];
+		    check_against = arguments[1];
+		    after_check = arguments[2];
+		    
+		    check_cb = function(feature) { 
+			var is_enabled = false;
+			if (feature.enabledTo === 'all') { 
+			    is_enabled = true;
+			};
+			after_check.call(this, is_enabled);
+		    };
+		};
+
+		this.get_feature(feature_id, check_cb);
 	    }
 	};
     };

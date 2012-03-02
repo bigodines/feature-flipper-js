@@ -20,6 +20,17 @@ describe('Redis Storage', function() {
 	    });
 	});
 
+	it('should be able to delete', function(done) {
+	    storage().set('foo', 'foo_value');
+	    var result = storage().del('foo')
+	    result.should.equal(true);
+	    storage().get('foo', function(err, data) {
+		should.equal(data, null);
+		done();
+	    });
+
+	});
+
     });
 
 });

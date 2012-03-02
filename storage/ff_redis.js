@@ -14,7 +14,10 @@ var _redis = require('redis'),
 		    cb(err, data);
 		});
 
-	    }
+	    },
+	    del : function(key, cb) {
+		return redis.del(key, cb);
+	    },
 	}
     };
 
