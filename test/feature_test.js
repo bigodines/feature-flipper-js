@@ -101,4 +101,34 @@ describe('Feature Flipper check (integration)', function(done) {
 	    done();
 	});
     });
+
+    it('should be true to user id if feature is enabled to all', function(done) {
+	var f = ff.create_feature({id: 'enabled_feature', description: 'enabled to everyone', enabledTo: 'all'});
+	ff.save(f);
+	ff.check('enabled_feature', 'user_id', function(result) {
+	    result.should.equal(true);
+	    ff.delete('enabled_feature');
+	    done();
+	});
+    });
+
+    it('should return true if enabled to this user', function(done) {
+	var f = ff.create_feature({id: 'enabled_feature', description: 'enabled to everyone', enabledTo: ['mary', 'jane']});
+	ff.save(f);
+	ff.check('enabled_feature', 'mary', function(result) {
+	    result.should.equal(true);
+	    ff.delete('enabled_feature');
+	    done();
+	});
+    });
+    
+    it('should return true if enabled to this user', function(done) {
+	var f = ff.create_feature({id: 'secret_feature', description: 'enabled to everyone', enabledTo: ['mary', 'jane']});
+	ff.save(f);
+	ff.check('secret_feature', 'john_doe', function(is_enabled) {
+	    is_enabled.should.equal(true);
+	    ff.delete('secret_feature');
+	    done();
+	});
+    });
 });

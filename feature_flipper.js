@@ -69,12 +69,17 @@
 		    feature_id = arguments[0];
 		    check_against = arguments[1];
 		    after_check = arguments[2];
-		    
 		    check_cb = function(feature) { 
 			var is_enabled = false;
 			if (feature.enabledTo === 'all') { 
 			    is_enabled = true;
+			} else if (typeof feature.enabledTo === 'Array') {
+			    var enabled_users = feature.enabledTo;
+			    for(user in enabled_users) {
+				;
+			    };
 			};
+
 			after_check.call(this, is_enabled);
 		    };
 		};
