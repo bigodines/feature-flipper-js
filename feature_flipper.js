@@ -45,7 +45,8 @@
 	    },
 
 	    delete : function(feature) {
-		return this.storage.del('feature:'+feature.id);
+		var id = (typeof feature === 'string') ? feature : feature.id;
+		return this.storage.del('feature:'+ id);
 	    },
 
 	    /*Feature Flipper logic */
