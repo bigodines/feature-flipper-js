@@ -122,11 +122,11 @@ describe('Feature Flipper check (integration)', function(done) {
 	});
     });
     
-    it('should return true if enabled to this user', function(done) {
+    it('should return false if not enabled to this user', function(done) {
 	var f = ff.create_feature({id: 'secret_feature', description: 'enabled to everyone', enabledTo: ['mary', 'jane']});
 	ff.save(f);
 	ff.check('secret_feature', 'john_doe', function(is_enabled) {
-	    is_enabled.should.equal(true);
+	    is_enabled.should.equal(false);
 	    ff.delete('secret_feature');
 	    done();
 	});

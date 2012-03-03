@@ -73,11 +73,12 @@
 			var is_enabled = false;
 			if (feature.enabledTo === 'all') { 
 			    is_enabled = true;
-			} else if (typeof feature.enabledTo === 'Array') {
+			} else if (feature.enabledTo instanceof Array) {
 			    var enabled_users = feature.enabledTo;
-			    for(user in enabled_users) {
-				;
-			    };
+			    is_enabled = enabled_users.reduce(function(prev, curr, idx, arr) {
+				if (prev === true) return true;				
+				return (curr === check_against);
+			    }, false);
 			};
 
 			after_check.call(this, is_enabled);
