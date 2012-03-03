@@ -1,0 +1,60 @@
+h2. FeatureFlipper.js
+
+__The goal of this project is to provide an easy yet flexible way to test features only with a subset of your users.__
+
+Feature Flippers are becoming more and more popular as companies started implementing Lean Startup and Continuous Deployment techniques in their development process. The reason is very simple: It enables you to control which features will be displayed for your users, allowing tests in production without affecting the whole user set.
+
+We all know that production environments always have some gotchas that we can't fake in tests or can't reproduce in staging environments. How cool would be if we could push something disabled to production and enable it just for us, so we can test before enabling to everyone? Feature Flipper is here to the rescue :-)
+
+h3. Proposed workflow
+
+Here is how we use Feature Flipper in our projects at Yahoo!:
+# Develop a feature;
+# Add it to feature flipper;
+# Enabled it to yourself (it should ok to use production as all features are disabled by default);
+# Test, test, test;
+# Enable to all users;
+# After feature is stable, remove the feature that would be rendered instead of the new one.
+# Clean up your code and get back to 1)
+
+h3. Library usage:
+
+__This library is in it very early stage. So far it supports only basic operation but it is under heavily development and I plan to add many more features in the next couple weeks.__
+
+Create a *feature flipper* object passing the storage engine you plan to use and create some features:
+
+<pre>
+var feature_flipper = require('../feature_flipper'),
+    ff_redis = require('../storage/ff_redis')();    
+/* Create your set of features*/
+var ff = feature_flipper(ff_redis);
+    ff.create_feature({id: 'header', description: 'Site header', enabledTo : 'all'});
+    ff.create_feature({id: 'new_message_bar_layout', description: 'Testing the new messagebar layout with some users', enabledTo : ['johnny', 'mark', 'ron', 'some executive']});
+    ff.create_feature({id: 'bugfix #35', description: 'Attempt to fix bug #35 of some product', enabledTo : ['qa_user_1', 'tati', 'johnny']});
+</pre>
+
+Then you'll have a way to test wether to render this feature or something else:
+
+<pre>
+ff.check('new_message_bar_layout', 'johnny', function(is_enabled) { 
+     return is_enabled ? render_feature() : render_something_else();
+});
+
+ff.check('header', 'johnny', function(is_enabled) {
+    return is_enabled ? render_feature() : render_something_else();
+});
+
+ff.check('bugfix #35', 'some_user_that_will_not_see_this', function (is_enabled) {
+    return is_enabled ? render_feature() : render_something_else();
+});
+</pre>
+
+h3. Dependencies
+
+This library currently depends on @mocha@, @should@ and @redis@ modules for nodejs. You can install all of them with @npm@
+
+h3. Roadmap:
+
+Please check 'issues' for more details on what's in the roadmap and bugfixes
+
+
