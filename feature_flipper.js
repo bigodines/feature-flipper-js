@@ -21,7 +21,6 @@
 
 	/* Feature Flipper public methods */
 	return {
-	    // TODO: replace with redis by default.
 	    storage : storage_engine,
 
 	    /* feature CRUD */
