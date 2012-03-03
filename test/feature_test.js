@@ -47,8 +47,7 @@ describe('How Feature Flipper deals with features', function() {
     it('should be able to save a feature', function () {
 	var feature = new FeatureStub();
 	feature.id = 'foo';
-	var ff = flipper();
-	ff.storage = StorageStub;
+	var ff = flipper(StorageStub);
 	var data = ff.save(feature);
 	should.equal(data.id, feature.id);
     });
@@ -56,16 +55,14 @@ describe('How Feature Flipper deals with features', function() {
     it('should be able to delete a feature', function() {
 	var feature = new FeatureStub();
 	feature.id = 'foo';
-	var ff = flipper();
-	ff.storage = StorageStub;
+	var ff = flipper(StorageStub);
 	var result = ff.delete(feature);
 	should.equal(1, result);
     });
 
     it('should return a feature object given a feature_id', function() {
 	var expected = JSON.stringify({id: 'feature:some_id', description : 'some description'});
-	var ff = flipper();
-	ff.storage = StorageStub;
+	var ff = flipper(StorageStub);
 	var feature = ff.get_feature('some_id');
 	expected.should.eql(feature);
     });
@@ -73,8 +70,7 @@ describe('How Feature Flipper deals with features', function() {
 
 /*integration tests*/
 describe('Feature Flipper check (integration)', function(done) {
-    var ff = flipper();
-    ff.storage = ff_redis;
+    var ff = flipper(ff_redis);
     it('should default to disable', function() {
 	ff.check('i dont exist', function(isEnabled) {
 	    isEnabled.should.equal(false);
@@ -113,7 +109,7 @@ describe('Feature Flipper check (integration)', function(done) {
     });
 
     it('should return true if enabled to this user', function(done) {
-	var f = ff.create_feature({id: 'enabled_feature', description: 'enabled to everyone', enabledTo: ['mary', 'jane']});
+	var f = ff.create_feature({id: 'enabled_feature', description: 'enabled to mary', enabledTo: ['mary', 'jane']});
 	ff.save(f);
 	ff.check('enabled_feature', 'mary', function(result) {
 	    result.should.equal(true);
@@ -123,7 +119,7 @@ describe('Feature Flipper check (integration)', function(done) {
     });
     
     it('should return false if not enabled to this user', function(done) {
-	var f = ff.create_feature({id: 'secret_feature', description: 'enabled to everyone', enabledTo: ['mary', 'jane']});
+	var f = ff.create_feature({id: 'secret_feature', description: 'not enabled to john_doe', enabledTo: ['mary', 'jane']});
 	ff.save(f);
 	ff.check('secret_feature', 'john_doe', function(is_enabled) {
 	    is_enabled.should.equal(false);
