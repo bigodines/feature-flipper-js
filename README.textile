@@ -55,6 +55,12 @@ ff.check('bugfix #35', 'some_user_that_will_not_see_this', function (is_enabled)
 });
 </pre>
 
+Delete a feature:
+
+<pre>
+ff.delete('bugfix #35');
+</pre>
+
 h3. Dependencies
 
 This library currently depends on @mocha@, @should@ and @redis@ modules for nodejs. You can install all of them with @npm@
