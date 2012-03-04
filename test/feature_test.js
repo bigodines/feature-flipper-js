@@ -1,6 +1,6 @@
 var should = require('should'),
     flipper = require('../feature_flipper'),
-    ff_redis = require('../storage/ff_redis')();    
+    ff_redis = require('../storage/ff_redis')();
 
 
 describe('Feature', function() {

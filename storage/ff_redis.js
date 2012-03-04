@@ -1,9 +1,9 @@
-var _redis = require('redis'),
-    redis = _redis.createClient();
-
 (function() {
-    ff_redis = function() {
-	var ret;
+    var _redis = require('redis'),
+
+    ff_redis = function(port, host, options) {
+	var ret,
+	redis = _redis.createClient(port, host, options);
 	/* public methods*/
 	return {
 	    set : function(key, value, cb) {
