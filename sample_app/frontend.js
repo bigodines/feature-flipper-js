@@ -1,6 +1,13 @@
 /* This is a sample application that ilustrates how to work with feature flipper 
 
+Hopefully it will get you started.
+
+::::DEPENDENCY:::
 it requires ExpressJS to run. (http://expressjs.com)
+
+
+::::DISCLAIMER::::
+sorry for the dirty code. I promise it will get better, but I want to work on more features for the library first.
 */
 
 var express = require('express');
