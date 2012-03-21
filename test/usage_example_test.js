@@ -6,9 +6,9 @@ describe('Feature Flipper Usage Examples', function() {
     describe('Happy paths', function() {
 	/* Create your set of features*/
 	var ff = feature_flipper(ff_redis);
-	ff.create_feature({id: 'header', description: 'Site header', enabledTo : 'all'});
-	ff.create_feature({id: 'new_message_bar_layout', description: 'Testing the new messagebar layout with some users', enabledTo : ['johnny', 'mark', 'ron', 'some executive']});
-	ff.create_feature({id: 'bugfix #35', description: 'Attempt to fix bug #35 of some product', enabledTo : ['qa_user_1', 'tati', 'johnny']});
+	ff.save(ff.create_feature({id: 'header', description: 'Site header', enabledTo : 'all'}));
+	ff.save(ff.create_feature({id: 'new_message_bar_layout', description: 'Testing the new messagebar layout with some users', enabledTo : ['johnny', 'mark', 'ron', 'some executive']}));
+	ff.save(ff.create_feature({id: 'bugfix #35', description: 'Attempt to fix bug #35 of some product', enabledTo : ['qa_user_1', 'tati', 'johnny']}));
 
 	var render_feature = function(){}, render_something_else = function(){};
 

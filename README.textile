@@ -28,15 +28,15 @@ var feature_flipper = require('../feature_flipper'),
     ff_redis = require('../storage/ff_redis')();    
 /* Create your set of features*/
 var ff = feature_flipper(ff_redis);
-    ff.create_feature({id: 'header', 
+    ff.save(ff.create_feature({id: 'header', 
                        description: 'Site header', 
-                       enabledTo : 'all'});
-    ff.create_feature({id: 'new_message_bar_layout', 
+                       enabledTo : 'all'}));
+    ff.save(ff.create_feature({id: 'new_message_bar_layout', 
                        description: 'Testing the new messagebar layout with some users', 
-                       enabledTo : ['johnny', 'mark', 'ron', 'some executive']});
-    ff.create_feature({id: 'bugfix #35', 
+                       enabledTo : ['johnny', 'mark', 'ron', 'some executive']}));
+    ff.save(ff.create_feature({id: 'bugfix #35', 
                        description: 'Attempt to fix bug #35 of some product', 
-                       enabledTo : ['qa_user_1', 'tati', 'johnny']});
+                       enabledTo : ['qa_user_1', 'tati', 'johnny']}));
 </pre>
 
 Then you'll have a way to test wether to render this feature or something else:
