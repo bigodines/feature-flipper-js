@@ -65,6 +65,8 @@ h3. Dependencies
 
 This library currently depends on @mocha@, @should@ and @redis@ modules for nodejs. You can install all of them with @npm@
 
+The sample_app/ requires @express@ as well.
+
 h3. Roadmap:
 
 Please check 'issues' for more details on what's in the roadmap and bugfixes
