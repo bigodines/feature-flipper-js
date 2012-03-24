@@ -43,7 +43,7 @@ app.all('/:user?', function(req, res, next) {
 });
 
 app.get('/', function( req, res) {
-    res.send('this is a sample application using express and feature_flipper. Please make a request to /<user> where <user> is \'mary\', \'john\' or \'admin\'');
+    res.send('this is a sample application using express and feature_flipper. Please make a request to /&lt;user&gt; where &lt;user&gt; is \'mary\', \'john\' or \'admin\'');
 });
 
 
