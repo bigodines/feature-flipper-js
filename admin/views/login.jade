@@ -2,16 +2,16 @@
 div.container
     div.row
 
-                h1 #{title}
+                h1 Feature Flipper - Admin Tool
 
     div.row
         div.offset4.span4
-        form#login
-        label
-                | Username: 
-                input(type="text",name="username")
-        label
-                | Password: 
-                input(type="password", name="userpass")
+        form#login(method="post", action="/")
+                label
+                        | Username: 
+                        input(type="text",name="username")
+                label
+                        | Password: 
+                        input(type="password", name="userpass")
     
-        input(type="submit", name="submit", value="submit")  
+                input(type="submit", name="submit", value="submit")  
