@@ -1,24 +1,32 @@
+var check_login = function(req, res) {
+    if (!req.session || !req.session.login) {
+        res.render('login');
+        return false;
+    }
+    return true;
+
+}
+
 /*
  * GET home page.
  */
 
 exports.index = function(req, res){
-  res.render('login');
+    if (check_login(req, res)) { 
+        res.render('index');
+    }
 };
 
 exports.login = function(req, res) {
     var user = req.body.username;
     var password = req.body.userpass;
 
-    console.log(user,password);
-
-
     if (user === 'admin' && password === 'featureflipper') {
-        console.log('eeee!!');
+        req.session.login = 'admin';
         res.render('index');
     }
     else {
-        console.log('try again');
         res.render('login', {error: 'Invalid Login'});
     }
 };
+
