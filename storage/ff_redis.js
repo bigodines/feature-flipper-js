@@ -7,10 +7,14 @@
 	/* public methods*/
 	return {
 	    set : function(key, value, cb) {
-		return redis.set(key, value, cb);
+		return redis.set(key, value, function(err, data) {
+        if (!cb) { return; }
+        cb(err, data);
+    });
 	    },
 	    get : function(key, cb) {
 		redis.get(key, function(err, data){
+        if (!cb) { return; }
 		    cb(err, data);
 		});
 
