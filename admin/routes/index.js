@@ -1,20 +1,17 @@
-var check_login = function(req, res) {
-    if (!req.session || !req.session.login) {
-        res.render('login');
-        return false;
-    }
-    return true;
-
-}
+var redis = require('redis').createClient();
 
 /*
  * GET home page.
  */
 
 exports.index = function(req, res){
-    if (check_login(req, res)) { 
-        res.render('index');
-    }
+    redis.keys('feature:*', function(err, data) {
+        var features = [];
+        for(var i=0; i < data.length; i++) {
+            features.push(data[i].substring('feature:'.length));
+        }
+        res.render('index', { features : features });
+    });
 };
 
 exports.login = function(req, res) {
@@ -23,7 +20,7 @@ exports.login = function(req, res) {
 
     if (user === 'admin' && password === 'featureflipper') {
         req.session.login = 'admin';
-        res.render('index');
+        exports.index(req,res);
     }
     else {
         res.render('login', {error: 'Invalid Login'});

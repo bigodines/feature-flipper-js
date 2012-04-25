@@ -8,12 +8,23 @@ The aim of this app is to provide a way to manage your features throught feature
  * Module dependencies.
  */
 
-var express = require('express')
-  , routes = require('./routes');
+var express = require('express'),
+    routes = require('./routes'),
+    redis = require('redis');
 
 var app = module.exports = express.createServer();
-
 // Configuration
+
+redis = redis.createClient();
+
+var check_login = function(req, res, next) {
+    if (req.session && req.session.login) {
+        next();
+        return;
+    }
+    res.render('login', { error: 'Please login first' } );
+}
+
 
 app.configure(function(){
   app.set('views', __dirname + '/views');
@@ -21,7 +32,7 @@ app.configure(function(){
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.cookieParser());
-  app.use(express.session({ secret: 'your secret here' }));
+  app.use(express.session({ secret: 'my very secret key', redis : redis }));
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
 });
@@ -36,7 +47,7 @@ app.configure('production', function(){
 
 // Routes
 
-app.get('/', routes.index);
+app.get('/', check_login, routes.index);
 app.post('/', routes.login);
 
 app.listen(3000);
