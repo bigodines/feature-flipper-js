@@ -5,9 +5,18 @@ div.container-fluid
         p Here you'll find your features!
 
     div.row-fluid
-        ul.nav
+        table.table.table-striped
+            thead
+                tr
+                    th feature description
+                    th enabled to all
+                    th enabled to some
+
             if typeof(features) !== 'undefined'
                 for feature in features
-                    li #{feature.description}
+                    tr
+                        td #{feature.description}
+                        td ??
+                        td ??
         
 p bye
