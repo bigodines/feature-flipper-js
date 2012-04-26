@@ -1,7 +1,13 @@
-h1 Hi, these are your features
-br
-if typeof(features) !== 'undefined'
-    for feature in features
-        p #{feature.id}
+!!! 5
+div.container-fluid
+    div.row-fluid
+        h1 Feature Flipper - Admin Tool
+        p Here you'll find your features!
 
+    div.row-fluid
+        ul.nav
+            if typeof(features) !== 'undefined'
+                for feature in features
+                    li #{feature.description}
+        
 p bye
