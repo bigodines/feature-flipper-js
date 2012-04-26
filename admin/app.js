@@ -15,8 +15,6 @@ var express = require('express'),
 var app = module.exports = express.createServer();
 // Configuration
 
-redis = redis.createClient();
-
 var check_login = function(req, res, next) {
     if (req.session && req.session.login) {
         next();

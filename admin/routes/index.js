@@ -7,10 +7,13 @@ var redis = require('redis').createClient();
 exports.index = function(req, res){
     redis.keys('feature:*', function(err, data) {
         var features = [];
-        for(var i=0; i < data.length; i++) {
-            features.push(data[i].substring('feature:'.length));
-        }
-        res.render('index', { features : features });
+        var a = redis.mget(data, function(err, all_features) {
+            for(var i=0; i < all_features.length; i++) {
+                var feature = JSON.parse(all_features[i]);
+                features.push(feature);
+            }
+            res.render('index', { features : features });
+        });
     });
 };
 
