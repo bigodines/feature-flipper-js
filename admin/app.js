@@ -11,7 +11,6 @@ The aim of this app is to provide a way to manage your features throught feature
 var express = require('express'),
     routes = require('./routes'),
     redis = require('redis');
-
 var app = module.exports = express.createServer();
 // Configuration
 
@@ -33,6 +32,7 @@ app.configure(function(){
   app.use(express.session({ secret: 'my very secret key', redis : redis }));
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
+
 });
 
 app.configure('development', function(){
