@@ -1,6 +1,3 @@
-//var ff = require('feature_flipper');
-
-
 exports.api = (api = function() {
     /* api contains an internal instance of feature_flipper that will be used in all public methods */
     var feature_flipper = require('../../feature_flipper'),
