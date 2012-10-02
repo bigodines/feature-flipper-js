@@ -24,8 +24,8 @@
         },
         del: function (key, cb) {
           return redis.del(key, cb);
-        },
-      }
+        }
+      };
     };
 
   module.exports = ff_redis;
