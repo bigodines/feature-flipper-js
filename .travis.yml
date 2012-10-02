@@ -2,7 +2,6 @@ language: node_js
 node_js:
   - 0.6
 
-before_script:
-  - npm install
+services: redis-server
 
 script: npm test
