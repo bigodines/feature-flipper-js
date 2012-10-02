@@ -6,7 +6,7 @@
       /* public methods*/
       return {
         set: function (key, value, cb) {
-          return redis.set(key, value, function (err, data) {
+          redis.set(key, value, function (err, data) {
             if (!cb) {
               return;
             }
@@ -23,9 +23,9 @@
 
         },
         del: function (key, cb) {
-          return redis.del(key, cb);
-        },
-      }
+          redis.del(key, cb);
+        }
+      };
     };
 
   module.exports = ff_redis;
