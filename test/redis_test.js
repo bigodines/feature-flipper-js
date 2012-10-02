@@ -5,11 +5,13 @@ var should = require('should'),
 describe('Redis Storage', function() {
 
     describe('Basic Stuff', function() {
-        it('should be able to take a json and save', function(done) {
-            var serialized_object = "{ 'foo' : 'bar', 'john' : 'doe' }",
-                result = storage.set('id', serialized_object, done);
+        var serialized_object = "{ 'foo' : 'bar', 'john' : 'doe' }";
+        it('should be able to take a JSON and save', function(done) {
+            var result = storage.set('id', serialized_object, function (err, data) {
+                result.should.equal(true);
+                done();
+            });
 
-            result.should.equal(true);
         });
         
         it('should be able to retrieve', function(done) {
