@@ -7,8 +7,8 @@ describe('Redis Storage', function() {
     describe('Basic Stuff', function() {
         var serialized_object = "{ 'foo' : 'bar', 'john' : 'doe' }";
         it('should be able to take a JSON and save', function(done) {
-            var result = storage.set('id', serialized_object, function (err, data) {
-                result.should.equal(true);
+            storage.set('id', serialized_object, function (err, data) {
+                should.equal(err, null);
                 done();
             });
 
@@ -24,13 +24,13 @@ describe('Redis Storage', function() {
 
         it('should be able to delete', function(done) {
             storage.set('foo', 'foo_value');
-            var result = storage.del('foo')
-            result.should.equal(true);
-            storage.get('foo', function(err, data) {
-                should.equal(data, null);
-                done();
+            storage.del('foo', function (err) {
+                should.equal(err, null);
+                storage.get('foo', function(err, data) {
+                    should.equal(data, null);
+                    done();
+                });
             });
-
         });
 
     });
