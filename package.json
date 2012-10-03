@@ -5,21 +5,25 @@
     "preferGlobal": "true",
     "main": "feature_flipper.js",
     "author": {
-	"name" : "Matheus Mendes",
-	"email" : "<bigodines@gmail.com>",
-	"twitter" : "bigodines"
+        "name" : "Matheus Mendes",
+        "email" : "<bigodines@gmail.com>",
+        "twitter" : "bigodines"
     },
     "repository" : {
         "type": "git",
         "url": "https://bigodines@github.com/bigodines/feature-flipper-js.git"
     },
     "dependencies": {
+        "redis": "0.7.1"
+    },
+    "devDependencies": {
         "mocha": "0.12.0",
-	"redis": "0.7.1",
-	"should": "0.6.0"
+        "should": "0.6.0",
+        "jshint": "*"
     },
     "scripts" : { 
-	"test" : "mocha -R spec"
+        "pretest" : "./node_modules/.bin/jshint feature_flipper.js storage",
+        "test" : "./node_modules/.bin/mocha -R spec"
     },
     "license" : "BSD",
     "engines": { "node": "*" }
