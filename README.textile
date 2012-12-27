@@ -8,7 +8,7 @@ We all know that production environments always have some gotchas that we can't 
 
 h3. Proposed workflow
 
-Here is how we use Feature Flipper in our projects at Yahoo!:
+Here is how I use Feature Flipper:
 # Develop a feature;
 # Add it to feature flipper;
 # Enabled it to yourself (it should ok to use production as all features are disabled by default);
