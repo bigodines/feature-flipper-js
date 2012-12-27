@@ -47,6 +47,10 @@ app.configure('production', function(){
 app.get('/', check_login, routes.index);
 app.post('/', routes.login);
 
+aap.get('/create', checklogin, routes.createFeature);
+
+
+// API method calls
 app.post('/v1/create', routes.api);
 
 app.listen(3000);
