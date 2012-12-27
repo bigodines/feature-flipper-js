@@ -3,7 +3,7 @@
         /* internals */
         /* Feature object */
       var _Feature = function(options) {
-            var id, description, creation, expire;
+            var id, description, creation, expire, enabledTo;
             if (typeof options !== 'object') {
                 throw new Error('please provide an option object');
             }

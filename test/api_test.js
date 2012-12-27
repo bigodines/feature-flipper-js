@@ -9,7 +9,22 @@ describe('API Test', function() {
             body : {
                 id : 'first',
                 description: 'first feature inserted via api'
-               
+            }
+        };
+        var res = {
+            send : function(result) {
+                result.should.equal('{"id":"first","description":"first feature inserted via api"}');
+                done();
+            }
+        };
+        api.create(req, res);
+    });
+
+    it('should be possible to enable a feature throught API', function(done) {
+        var req = { 
+            body : {
+                id : 'first',
+                description: 'first feature inserted via api'
             }
         };
         var res = {

@@ -8,9 +8,11 @@ exports.index = function(req, res){
     redis.keys('feature:*', function(err, data) {
         var features = [];
         var a = redis.mget(data, function(err, all_features) {
-            for(var i=0; i < all_features.length; i++) {
-                var feature = JSON.parse(all_features[i]);
-                features.push(feature);
+            if (all_features !== undefined) {
+                for(var i=0; i < all_features.length; i++) {
+                    var feature = JSON.parse(all_features[i]);
+                    features.push(feature);
+                }
             }
             res.render('index', { features : features });
         });

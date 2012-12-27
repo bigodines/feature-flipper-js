@@ -44,11 +44,11 @@ app.configure('production', function(){
 });
 
 // Routes
-app.get('/', check_login, routes.index);
 app.post('/', routes.login);
 
-aap.get('/create', checklogin, routes.createFeature);
-
+app.get('/', check_login, routes.index);
+app.get('/create', check_login, routes.createFeature);
+ 
 
 // API method calls
 app.post('/v1/create', routes.api);
