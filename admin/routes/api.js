@@ -12,7 +12,14 @@ exports.api = (api = function() {
         },
 
         enableTo : function(req, res) {
-            res.status(201);
+            var handle_result = function(changed_feature) {
+                res.status(200);
+                res.send(JSON.stringify({id: changed_feature.id, message: "success"}));
+            };
+
+            var args = req.body;
+
+            ff.enableTo(args.feature_id, args.user_id, handle_result);
         }
     }
 
