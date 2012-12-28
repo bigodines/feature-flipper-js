@@ -33,5 +33,5 @@ exports.login = function(req, res) {
 };
 
 exports.createFeature = function(req, res) {
-    res.render('featureForm', {target: '/v1/create/'});
+    res.render('featureForm', {target: '/v1/create'});
 }

@@ -1,9 +1,9 @@
 var should = require('should'),
     flipper = require('../feature_flipper'),
-    api = require('../admin/routes/api').api;
+    api = require('../admin/routes/api');
 
 
-describe('API Test', function() {
+describe('API Test - Happy path', function() {
     it('should be possible to create a new feature trought API', function(done) {
         var req = { 
             body : {
@@ -38,4 +38,5 @@ describe('API Test', function() {
         };
         api.enableTo(req, res);
     });
+
 });

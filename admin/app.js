@@ -10,6 +10,7 @@ The aim of this app is to provide a way to manage your features throught feature
 
 var express = require('express'),
     routes = require('./routes'),
+    api = require('./routes/api'),
     redis = require('redis');
 var app = module.exports = express.createServer();
 // Configuration
@@ -35,7 +36,7 @@ app.configure(function(){
 
 });
 
-app.configure('development', function(){
+app.configure('development', function() {
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
 
@@ -43,15 +44,17 @@ app.configure('production', function(){
   app.use(express.errorHandler());
 });
 
+// API method calls
+app.all('/v1/create', api.create);
+app.post('/v1/enableTo', api.enableTo);
+
 // Routes
 app.post('/', routes.login);
 
 app.get('/', check_login, routes.index);
-app.get('/create', check_login, routes.createFeature);
+app.get('/create', /*check_login,*/ routes.createFeature);
  
 
-// API method calls
-app.post('/v1/create', routes.api);
 
 app.listen(3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
