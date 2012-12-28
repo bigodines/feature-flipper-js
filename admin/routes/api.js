@@ -9,6 +9,10 @@ exports.api = (api = function() {
         create : function(req, res) {
             var new_feature = ff.save(req.body);
             res.send(JSON.stringify(new_feature));
+        },
+
+        enableTo : function(req, res) {
+            res.status(201);
         }
     }
 

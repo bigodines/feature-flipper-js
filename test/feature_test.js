@@ -39,9 +39,24 @@ describe('How Feature Flipper deals with features', function() {
 	get : function(id) { return JSON.stringify({ id : id, description: 'some description' });}
     },
 
+    StorageStubFactory = function(expected_set_return, expected_del_return, expected_get_return) {
+        return {
+            set : function(id, data, cb) { 
+                cb(null,expected_set_return); 
+            },
+            del : function(id, cb) { 
+                cb(null,expected_del_return);
+            },
+            get : function(id, cb) { 
+                cb(null,JSON.stringify(expected_get_return));
+            }
+        }
+    },
+
     FeatureStub = function() {
-	var id = 1;
-	return this;
+        return {
+	    id : 1
+        }
     };
 
     it('should be able to save a feature', function () {
@@ -65,6 +80,26 @@ describe('How Feature Flipper deals with features', function() {
 	var ff = flipper(StorageStub);
 	var feature = ff.get_feature('some_id');
 	expected.should.eql(feature);
+    });
+
+    it('should be able to enable a feature to all after it has been created', function() {});
+    it('should be able to enable a feature to an user', function(done) {
+        // test setup
+        var fake_feature = new FeatureStub();
+        var expected_feature = new FeatureStub();
+        expected_feature.enabledTo = ['john'];
+        
+        var storageMock = StorageStubFactory(expected_feature, null, fake_feature);
+
+        var asyncTest = function(result) {
+            result.should.eql(expected_feature);
+            done();
+        }
+
+        var ff = flipper(storageMock);
+        ff.enableTo(1, 'john', asyncTest);
+
+        
     });
 });
 
