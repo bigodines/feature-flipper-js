@@ -32,7 +32,7 @@ describe('API Test - Happy path', function() {
                 code.should.equal(200);
             },
             send : function(result) {
-                result.should.equal('{"id":"first","message":"success"}');
+                result.should.equal('{"id":"first","action":"enable","message":"success"}');
                 done();
             }
         };
@@ -51,7 +51,7 @@ describe('API Test - Happy path', function() {
                 code.should.equal(200);
             },
             send : function(result) {
-                result.should.equal('{"id":"first","message":"success"}');
+                result.should.equal('{"id":"first","action":"disable","message":"success"}');
                 done();
             }
         };

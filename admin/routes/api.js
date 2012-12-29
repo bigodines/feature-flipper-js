@@ -12,7 +12,7 @@ exports.create = function(req, res) {
 exports.enableTo = function(req, res) {
     var handle_result = function(changed_feature) {
         res.status(200);
-        res.send(JSON.stringify({id: changed_feature.id, message: "success"}));
+        res.send(JSON.stringify({id: changed_feature.id, action:"enable", message: "success"}));
     };
     
     var args = req.body;
@@ -20,7 +20,13 @@ exports.enableTo = function(req, res) {
 };
 
 exports.disableTo = function(req, res) {
+    var handle_result = function(changed_feature) {
+        res.status(200);
+        res.send(JSON.stringify({id: changed_feature.id, action: "disable", message: "success"}));
+    };
 
+    var args = req.body;
+    ff.disableTo(args.feature_id, args.user_id, handle_result);
 };
 
 

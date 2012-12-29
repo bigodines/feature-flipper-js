@@ -76,6 +76,38 @@
                 // edit and enable feature
             },
 
+            disableTo : function(feature_id, user_id, callback) {
+                var _self = this;
+                var disable_feature = function(feature) {
+                    if (user_id === 'all') {
+                        unset(feature.enabledTo);
+                    } else {
+                        if (feature.enabledTo instanceof Array) {
+                            var enabled_users = feature.enabledTo;
+                            var current_position = enabled_users.indexOf(user_id);
+                            if (current_position >= 0) {
+                                enabled_users.splice(current_position,1);
+                                if(enabled_users.length == 0) { 
+                                    delete(feature.enabledTo); 
+                                } else {
+                                    feature.enabledTo = enabled_users;
+                                }
+                            }
+                        } 
+                    }
+                    var new_feature = _self.save(feature);
+                    callback.call(this,new_feature);
+                };
+
+                var deal_with_result = function (is_enabled) {
+                    if (is_enabled === true) {
+                        this.get_feature(feature_id, disable_feature);
+                    }
+                }
+
+                this.check(feature_id, user_id, deal_with_result);
+            },
+
             /*Feature Flipper logic */
             check : function(/* [ all optional params ], after_check_callback(bool is_enabled) */) {
                 var feature, feature_id, context = this,
