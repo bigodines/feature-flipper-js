@@ -76,6 +76,7 @@
                 // edit and enable feature
             },
 
+            //TODO: merge disableTo and enableTo into one single function
             disableTo : function(feature_id, user_id, callback) {
                 var _self = this;
                 var disable_feature = function(feature) {
