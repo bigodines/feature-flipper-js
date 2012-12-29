@@ -17,8 +17,11 @@ exports.enableTo = function(req, res) {
     
     var args = req.body;
     ff.enableTo(args.feature_id, args.user_id, handle_result);
-}
+};
 
+exports.disableTo = function(req, res) {
+
+};
 
 
 

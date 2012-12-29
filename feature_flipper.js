@@ -53,10 +53,14 @@
             enableTo : function(feature_id, user_id, callback) {
                 var _self = this;
                 var enable_feature = function(feature) {
-                    if (feature.enabledTo instanceof Array) {
-                        feature.enabledTo.push(user_id);
+                    if (user_id === 'all') {
+                        feature.enabledTo = 'all';
                     } else {
-                        feature.enabledTo = new Array(user_id);
+                        if (feature.enabledTo instanceof Array) {
+                            feature.enabledTo.push(user_id);
+                        } else {
+                            feature.enabledTo = new Array(user_id);
+                        }
                     }
                     var new_feature = _self.save(feature);
                     callback.call(this,new_feature);

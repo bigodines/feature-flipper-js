@@ -82,7 +82,24 @@ describe('How Feature Flipper deals with features', function() {
 	expected.should.eql(feature);
     });
 
-    it('should be able to enable a feature to all after it has been created', function() {});
+    it('should be able to enable a feature to all after it has been created', function(done) {
+        // test setup
+        var fake_feature = new FeatureStub();
+        var expected_feature = new FeatureStub();
+        expected_feature.enabledTo = 'all';
+        
+        var storageMock = StorageStubFactory(expected_feature, null, fake_feature);
+
+        var asyncTest = function(result) {
+            result.should.eql(expected_feature);
+            done();
+        }
+
+        var ff = flipper(storageMock);
+        ff.enableTo(1, 'all', asyncTest);
+
+    });
+
     it('should be able to enable a feature to an user', function(done) {
         // test setup
         var fake_feature = new FeatureStub();
