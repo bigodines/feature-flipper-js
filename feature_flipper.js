@@ -45,7 +45,7 @@
                 return feature;
             },
 
-            delete : function(feature) {
+            'delete' : function(feature) {
                 var id = (typeof feature === 'string') ? feature : feature.id;
                 return this.storage.del('feature:'+ id);
             },
@@ -70,7 +70,7 @@
                     if (is_enabled === false) {
                         this.get_feature(feature_id, enable_feature);
                     }
-                }
+                };
 
                 this.check(feature_id, user_id, deal_with_result);
                 // edit and enable feature
@@ -88,7 +88,7 @@
                             var current_position = enabled_users.indexOf(user_id);
                             if (current_position >= 0) {
                                 enabled_users.splice(current_position,1);
-                                if(enabled_users.length == 0) { 
+                                if(enabled_users.length === 0) { 
                                     delete(feature.enabledTo); 
                                 } else {
                                     feature.enabledTo = enabled_users;
@@ -104,7 +104,7 @@
                     if (is_enabled === true) {
                         this.get_feature(feature_id, disable_feature);
                     }
-                }
+                };
 
                 this.check(feature_id, user_id, deal_with_result);
             },
