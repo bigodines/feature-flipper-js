@@ -23,7 +23,7 @@
     },
     "scripts" : { 
         "pretest" : "./node_modules/.bin/jshint feature_flipper.js storage",
-        "test" : "./node_modules/.bin/mocha -R spec"
+        "test" : "./node_modules/.bin/mocha -C -R spec"
     },
     "license" : "BSD",
     "engines": { "node": "*" }
