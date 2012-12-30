@@ -81,7 +81,7 @@
                 var _self = this;
                 var disable_feature = function(feature) {
                     if (user_id === 'all') {
-                        unset(feature.enabledTo);
+                        delete(feature.enabledTo);
                     } else {
                         if (feature.enabledTo instanceof Array) {
                             var enabled_users = feature.enabledTo;
