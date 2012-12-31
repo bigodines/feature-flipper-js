@@ -29,5 +29,13 @@ exports.disableTo = function(req, res) {
     ff.disableTo(args.feature_id, args.user_id, handle_result);
 };
 
+exports.remove = function(req, res) {
+    var handle_result = function(changed_feature_id) {
+        res.status(200);
+        res.send(JSON.stringify({id: changed_feature_id, action: "remove", message: "success"}));
+    };
 
+    var args = req.body;
+    ff.remove(args.feature_id, handle_result);
 
+};

@@ -33,12 +33,13 @@ describe('Feature', function() {
 });
 
 describe('How Feature Flipper deals with features', function() {
+    /* this should work for most of the cases */
     var StorageStub = {
 	set : function(id, data) { return data; },
 	del : function(id) { return 1; },
 	get : function(id) { return JSON.stringify({ id : id, description: 'some description' });}
     },
-
+    /* more flexible use of the stub */
     StorageStubFactory = function(expected_set_return, expected_del_return, expected_get_return) {
         return {
             set : function(id, data, cb) { 
@@ -67,12 +68,13 @@ describe('How Feature Flipper deals with features', function() {
 	should.equal(data.id, feature.id);
     });
 
-    it('should be able to delete a feature', function() {
+    it('should be able to remove a feature', function() {
 	var feature = new FeatureStub();
 	feature.id = 'foo';
 	var ff = flipper(StorageStub);
-	var result = ff.delete(feature);
-	should.equal(1, result);
+	ff.remove(feature, function(id) {
+            id.should.equal('foo');
+        });
     });
 
     it('should return a feature object given a feature_id', function() {
@@ -152,7 +154,7 @@ describe('Feature Flipper check (integration)', function(done) {
 	ff.save(f);
 	ff.check('enabled_feature', function(result) {
 	    result.should.equal(true);
-	    ff.delete('enabled_feature');
+	    ff.remove('enabled_feature');
 	    done();
 	} );
     });
@@ -162,7 +164,7 @@ describe('Feature Flipper check (integration)', function(done) {
 	ff.save(f);
 	ff.check('disabled_feature', 'user_id', function(result) {
 	    result.should.equal(false);
-	    ff.delete('disabled_feature');
+	    ff.remove('disabled_feature');
 	    done();
 	});
     });
@@ -172,7 +174,7 @@ describe('Feature Flipper check (integration)', function(done) {
 	ff.save(f);
 	ff.check('enabled_feature', 'user_id', function(result) {
 	    result.should.equal(true);
-	    ff.delete('enabled_feature');
+	    ff.remove('enabled_feature');
 	    done();
 	});
     });
@@ -182,7 +184,7 @@ describe('Feature Flipper check (integration)', function(done) {
 	ff.save(f);
 	ff.check('enabled_feature', 'mary', function(result) {
 	    result.should.equal(true);
-	    ff.delete('enabled_feature');
+	    ff.remove('enabled_feature');
 	    done();
 	});
     });
@@ -192,7 +194,7 @@ describe('Feature Flipper check (integration)', function(done) {
 	ff.save(f);
 	ff.check('secret_feature', 'john_doe', function(is_enabled) {
 	    is_enabled.should.equal(false);
-	    ff.delete('secret_feature');
+	    ff.remove('secret_feature');
 	    done();
 	});
     });

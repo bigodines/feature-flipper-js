@@ -57,4 +57,26 @@ describe('API Test - Happy path', function() {
         };
         api.disableTo(req, res);
     });
+
+    it('should be possible to delete a feature using the API', function(done) {
+        var req = { 
+            body : {
+                feature_id : 'first',
+            }
+        };
+        var res = {
+            status : function(code) {
+                code.should.equal(200);
+            },
+            send : function(result) {
+                result.should.equal('{"id":"first","action":"remove","message":"success"}');
+                done();
+            }
+        };
+        api.remove(req, res);
+    });
+
+    it('should be possible to check if a feature is enabled or not for a given user throught the API', function(done) {
+        done();
+    });
 });

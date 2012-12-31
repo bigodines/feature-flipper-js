@@ -45,9 +45,12 @@
                 return feature;
             },
 
-            'delete' : function(feature) {
+            remove : function(feature, callback) {
                 var id = (typeof feature === 'string') ? feature : feature.id;
-                return this.storage.del('feature:'+ id);
+                this.storage.del('feature:'+ id);
+                if (typeof callback !== 'undefined') {
+                    callback(id);
+                }
             },
 
             enableTo : function(feature_id, user_id, callback) {
@@ -73,7 +76,6 @@
                 };
 
                 this.check(feature_id, user_id, deal_with_result);
-                // edit and enable feature
             },
 
             //TODO: merge disableTo and enableTo into one single function
