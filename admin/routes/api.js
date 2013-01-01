@@ -38,3 +38,14 @@ exports.remove = function(req, res) {
     var args = req.body;
     ff.remove(args.feature_id, handle_result);
 };
+
+exports.check = function(req, res) {
+    var args = req.body;
+    var handle_result = function(feature_status) {
+        var pretty_status = (feature_status) ? "enabled" : "disabled";
+        res.status(200);
+        res.send(JSON.stringify({id: args.feature_id, user: args.user_id, status: pretty_status}));
+    };
+
+    ff.check(args.feature_id, args.user_id, handle_result);
+};

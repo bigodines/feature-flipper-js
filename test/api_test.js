@@ -99,6 +99,21 @@ describe('API Test - Happy path', function() {
     });
 
     it('should be possible to check if a feature is enabled or not for a given user throught the API', function(done) {
-        done();
+        var req = { 
+            body : {
+                feature_id : 'first',
+                user_id: 'john'
+            }
+        };
+        var res = {
+            status : function(code) {
+                code.should.equal(200);
+            },
+            send : function(result) {
+                result.should.equal('{"id":"first","user":"john","status":"disabled"}');
+                done();
+            }
+        };
+        api.check(req, res);
     });
 });
