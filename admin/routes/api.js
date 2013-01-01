@@ -37,5 +37,4 @@ exports.remove = function(req, res) {
 
     var args = req.body;
     ff.remove(args.feature_id, handle_result);
-
 };

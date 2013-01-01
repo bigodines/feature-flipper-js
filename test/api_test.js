@@ -1,19 +1,41 @@
 var should = require('should'),
     flipper = require('../feature_flipper'),
+    ff_redis = require('../storage/ff_redis')(),
     api = require('../admin/routes/api');
 
 
 describe('API Test - Happy path', function() {
+    beforeEach(function() {
+        var ff = flipper(ff_redis);
+        ff.save(ff.create_feature({id : 'first', description : 'le feature'}));
+    }),
+
+    afterEach(function(done) {
+        var redis = require('redis').createClient();
+        redis.keys('feature:*', function(err, data) {
+            redis.mget(data, function(err, features) {
+                var total = features.length;
+                for (var i = total; i > 0; i--) {
+                    var feature = JSON.parse(features[i-1]);
+                    redis.del(feature.id, function() {
+//                        console.log(feature.id);
+                    });
+                }
+                done();
+            });
+        });
+    });
+
     it('should be possible to create a new feature trought API', function(done) {
         var req = { 
             body : {
-                id : 'first',
+                id : 'seccond',
                 description: 'first feature inserted via api'
             }
         };
         var res = {
             send : function(result) {
-                result.should.equal('{"id":"first","description":"first feature inserted via api"}');
+                result.should.equal('{"id":"seccond","description":"first feature inserted via api"}');
                 done();
             }
         };

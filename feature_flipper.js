@@ -72,6 +72,8 @@
                 var deal_with_result = function (is_enabled) {
                     if (is_enabled === false) {
                         this.get_feature(feature_id, enable_feature);
+                    } else {
+                        this.get_feature(feature_id, callback);
                     }
                 };
 
@@ -96,7 +98,7 @@
                                     feature.enabledTo = enabled_users;
                                 }
                             }
-                        } 
+                        }
                     }
                     var new_feature = _self.save(feature);
                     callback.call(this,new_feature);
@@ -105,6 +107,8 @@
                 var deal_with_result = function (is_enabled) {
                     if (is_enabled === true) {
                         this.get_feature(feature_id, disable_feature);
+                    } else {
+                        this.get_feature(feature_id, callback);
                     }
                 };
 
