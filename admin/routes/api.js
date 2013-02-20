@@ -5,8 +5,15 @@ ff_redis = require('../../storage/ff_redis')();
 var ff = feature_flipper(ff_redis);
 
 exports.create = function(req, res) {
-    var new_feature = ff.save(req.body);
-    res.send(JSON.stringify(new_feature));
+    var handle_result = function(err, data) {
+        if (err === null) {
+            res.send(JSON.stringify(new_feature));
+        } else {
+            res.send(JSON.stringify({error: "400", message: "Invalid input"}));
+        }
+    };
+    var raw_feature = ff.create_feature(req.body);
+    var new_feature = ff.save(raw_feature, handle_result);
 };
 
 exports.enableTo = function(req, res) {

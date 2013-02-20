@@ -117,3 +117,45 @@ describe('API Test - Happy path', function() {
         api.check(req, res);
     });
 });
+
+describe('API Test - Happy path', function() {
+    beforeEach(function() {
+        var ff = flipper(ff_redis);
+        ff.save(ff.create_feature({id : 'first', description : 'le feature'}));
+    }),
+
+    afterEach(function(done) {
+        var redis = require('redis').createClient();
+        redis.keys('feature:*', function(err, data) {
+            redis.mget(data, function(err, features) {
+                var total = features.length;
+                for (var i = total; i > 0; i--) {
+                    var feature = JSON.parse(features[i-1]);
+                    redis.del(feature.id, function() {
+//                        console.log(feature.id);
+                    });
+                }
+                done();
+            });
+        });
+    });
+
+    it('should not allow creation of features without required fields', function() {
+        var req = { 
+            body : {
+                id : 'buggy_with_no_description',
+            }
+        };
+        var res = {
+            status : function(code) {
+                code.should.equal(400);
+                done();
+            },
+            send : function(result) {
+                result.should.equal('{"error":"400","message":"Invalid input"}');
+            }
+        };
+        api.create(req, res);
+        
+    });
+});

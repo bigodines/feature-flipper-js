@@ -13,10 +13,6 @@
                 this[i] = options[i];
             }
             
-            if (this.id === undefined || this.description === undefined) {
-                throw new Error('a feature must have an id and description');
-            }
-            
         };
         
 
@@ -24,23 +20,32 @@
         return {
             storage : storage_engine,
 
-            /* feature CRUD */
+            /* create feature won't persist the new feature in the storage engine until it is saved */
             create_feature : function(options) {
                 return new _Feature(options);
             },
 
-            get_feature: function(feature_id, dataHandler) {
+            get_feature: function(feature_id, data_handler) {
                 return this.storage.get('feature:'+feature_id, function(err, data) {
                     if (err) return undefined;
                     var serialized = data;
                     if (serialized && serialized.length > 0) {
-                        dataHandler.call(this, JSON.parse(serialized));
+                        data_handler.call(this, JSON.parse(serialized));
                     }
                 });
             },
 
-            save : function(feature) {
-                this.storage.set('feature:'+feature.id, JSON.stringify(feature), function() {});
+            save : function(feature, data_handler) {
+                if (typeof data_handler == 'undefined') {
+                    data_handler = function(err, data) { return data; };
+                }
+
+                if (feature.id === undefined || feature.description === undefined) {
+                    data_handler('A feature should have at least ID and DESCRIPTION');
+                    return feature;
+                }
+            
+                this.storage.set('feature:'+feature.id, JSON.stringify(feature), data_handler);
                 
                 return feature;
             },
