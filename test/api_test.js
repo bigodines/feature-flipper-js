@@ -118,7 +118,7 @@ describe('API Test - Happy path', function() {
     });
 });
 
-describe('API Test - Happy path', function() {
+describe('API Test - Not so happy paths', function() {
     beforeEach(function() {
         var ff = flipper(ff_redis);
         ff.save(ff.create_feature({id : 'first', description : 'le feature'}));
@@ -156,6 +156,24 @@ describe('API Test - Happy path', function() {
             }
         };
         api.create(req, res);
+    });
+
+    it('should return error if trying to remove a feature that does not exist', function() {
+        var req = { 
+            body : {
+                feature_id : 'i_dont_exist',
+            }
+        };
+        var res = {
+            status : function(code) {
+                code.should.equal(400);
+                done();
+            },
+            send : function(result) {
+                result.should.equal('{"error":"400","message":"Invalid input, feature does not exist"}');
+            }
+        };
+        api.remove(req, res);
         
     });
 });
