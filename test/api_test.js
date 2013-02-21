@@ -140,7 +140,7 @@ describe('API Test - Not so happy paths', function() {
         });
     });
 
-    it('should not allow creation of features without required fields', function() {
+    it('should not allow creation of features without required fields', function(done) {
         var req = { 
             body : {
                 id : 'buggy_with_no_description',
@@ -158,22 +158,23 @@ describe('API Test - Not so happy paths', function() {
         api.create(req, res);
     });
 
-    it('should return error if trying to remove a feature that does not exist', function() {
+    it('should return error if trying to enable a feature that does not exist', function(done) {
         var req = { 
             body : {
                 feature_id : 'i_dont_exist',
+                user_id : 'me neither'
             }
         };
         var res = {
             status : function(code) {
                 code.should.equal(400);
-                done();
             },
             send : function(result) {
-                result.should.equal('{"error":"400","message":"Invalid input, feature does not exist"}');
+                result.should.equal('{"error":"400","message":"Invalid input: Feature or user does not exist"}');
+                done();
             }
         };
-        api.remove(req, res);
+        api.enableTo(req, res);
         
     });
 });

@@ -27,7 +27,9 @@
 
             get_feature: function(feature_id, data_handler) {
                 return this.storage.get('feature:'+feature_id, function(err, data) {
-                    if (err) return undefined;
+                    if (err || data === null) {
+                        data_handler.call(this, null);
+                    }
                     var serialized = data;
                     if (serialized && serialized.length > 0) {
                         data_handler.call(this, JSON.parse(serialized));
@@ -71,10 +73,14 @@
                         }
                     }
                     var new_feature = _self.save(feature);
-                    callback.call(this,new_feature);
+                    callback.call(this, new_feature);
                 };
 
                 var deal_with_result = function (is_enabled) {
+                    if (is_enabled === null) {
+                        callback.call(this, null);
+                        return;
+                    }
                     if (is_enabled === false) {
                         this.get_feature(feature_id, enable_feature);
                     } else {
@@ -106,7 +112,7 @@
                         }
                     }
                     var new_feature = _self.save(feature);
-                    callback.call(this,new_feature);
+                    callback.call(this, new_feature);
                 };
 
                 var deal_with_result = function (is_enabled) {
@@ -126,6 +132,7 @@
                     argc = arguments.length, 
                     check_cb, after_check, check_against,
                     _global_check = function(feature) {
+                        if (feature === null) after_check.call(context, null);
                         return (feature.enabledTo === 'all');
                     };
 
@@ -133,6 +140,10 @@
                     feature_id = arguments[0];
                     after_check = arguments[1];
                     check_cb = function(feature) {
+                        if (feature === null) {
+                            after_check.call(context, null);
+                            return;
+                        }
                         var is_enabled = _global_check(feature);
                         after_check.call(this, is_enabled);
                     };
@@ -142,6 +153,10 @@
                     check_against = arguments[1];
                     after_check = arguments[2];
                     check_cb = function(feature) { 
+                        if (feature === null) {
+                            after_check.call(context, null);
+                            return;
+                        }
                         var is_enabled = _global_check(feature);
                         if (feature.enabledTo instanceof Array) {
                             var enabled_users = feature.enabledTo;

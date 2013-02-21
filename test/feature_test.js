@@ -56,7 +56,8 @@ describe('How Feature Flipper deals with features', function() {
 
     FeatureStub = function() {
         return {
-	    id : 1
+	    id : 1,
+            description: 'dummy'
         }
     };
 
@@ -140,11 +141,11 @@ describe('How Feature Flipper deals with features', function() {
 });
 
 /*integration tests*/
-describe('Feature Flipper check (integration)', function(done) {
+describe('Feature Flipper check (integration)', function() {
     var ff = flipper(ff_redis);
-    it('should default to disable', function() {
+    it('should default to disable', function(done) {
 	ff.check('i dont exist', function(isEnabled) {
-	    isEnabled.should.equal(false);
+            should.not.exist(isEnabled);
 	    done();
 	});
     });

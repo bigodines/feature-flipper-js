@@ -9,6 +9,7 @@ exports.create = function(req, res) {
         if (err === null) {
             res.send(JSON.stringify(new_feature));
         } else {
+            res.status(400);
             res.send(JSON.stringify({error: "400", message: "Invalid input"}));
         }
     };
@@ -18,8 +19,15 @@ exports.create = function(req, res) {
 
 exports.enableTo = function(req, res) {
     var handle_result = function(changed_feature) {
-        res.status(200);
-        res.send(JSON.stringify({id: changed_feature.id, action:"enable", message: "success"}));
+        if (changed_feature !== null) {
+            res.status(200);
+            res.send(JSON.stringify({id: changed_feature.id, action:"enable", message: "success"}));
+        } else {
+            res.status(400);
+            res.send(JSON.stringify({error: "400", message: "Invalid input: Feature or user does not exist"}));
+            return;
+        }
+        
     };
     
     var args = req.body;
