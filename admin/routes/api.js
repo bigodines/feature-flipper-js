@@ -36,8 +36,14 @@ exports.enableTo = function(req, res) {
 
 exports.disableTo = function(req, res) {
     var handle_result = function(changed_feature) {
-        res.status(200);
-        res.send(JSON.stringify({id: changed_feature.id, action: "disable", message: "success"}));
+        if (changed_feature !== null) {
+            res.status(200);
+            res.send(JSON.stringify({id: changed_feature.id, action: "disable", message: "success"}));
+        } else {
+            res.status(400);
+            res.send(JSON.stringify({error: "400", message: "Invalid input: Feature or user does not exist"}));
+            return;
+        }
     };
 
     var args = req.body;

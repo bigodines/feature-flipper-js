@@ -175,6 +175,25 @@ describe('API Test - Not so happy paths', function() {
             }
         };
         api.enableTo(req, res);
-        
     });
+
+    it('should return error if trying to enable a feature that does not exist', function(done) {
+        var req = { 
+            body : {
+                feature_id : 'i_dont_exist',
+                user_id : 'me neither'
+            }
+        };
+        var res = {
+            status : function(code) {
+                code.should.equal(400);
+            },
+            send : function(result) {
+                result.should.equal('{"error":"400","message":"Invalid input: Feature or user does not exist"}');
+                done();
+            }
+        };
+        api.disableTo(req, res);
+    });
+
 });
