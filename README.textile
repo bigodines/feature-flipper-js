@@ -1,5 +1,8 @@
 !https://travis-ci.org/bigodines/feature-flipper-js.png?branch=master!:https://travis-ci.org/bigodines/feature-flipper-js
 
+h1. Repo stability: alpha (mvp complete)
+early adopters are always welcome :-)
+
 h2. FeatureFlipper.js
 
 __The goal of this project is to provide an easy yet flexible way to test features only with a subset of your users.__
