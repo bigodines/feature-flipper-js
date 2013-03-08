@@ -1,6 +1,7 @@
 !https://travis-ci.org/bigodines/feature-flipper-js.png?branch=master!:https://travis-ci.org/bigodines/feature-flipper-js
 
 h1. Repo stability: alpha (mvp complete)
+
 early adopters are always welcome :-)
 
 h2. FeatureFlipper.js
