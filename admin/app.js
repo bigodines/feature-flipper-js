@@ -44,13 +44,15 @@ app.configure('production', function(){
   app.use(express.errorHandler());
 });
 
-// API method calls
-app.all('/v1/create', api.create);
+// API method calls (read the tests to know how to use them)
+app.get('/v1/create', api.create);
+app.get('/v1/check', api.check);
 app.post('/v1/enableTo', api.enableTo);
+app.post('/v1/disableTo', api.disableTo);
+app.post('/v1/remove', api.remove);
 
-// Routes
+// Sample app Routes
 app.post('/', routes.login);
-
 app.get('/', check_login, routes.index);
 app.get('/create', /*check_login,*/ routes.createFeature);
  
