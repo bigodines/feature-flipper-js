@@ -1,8 +1,5 @@
 !https://travis-ci.org/bigodines/feature-flipper-js.png?branch=master!:https://travis-ci.org/bigodines/feature-flipper-js
 
-Please do not rely on the API.js, if you intend to use feature-flipper-js in your projects, use feature_flippers.js itself
-at least until I remove this warning and update the documentation :) great things are coming.
-
 h2. FeatureFlipper.js
 
 __The goal of this project is to provide an easy yet flexible way to test features only with a subset of your users.__
@@ -16,7 +13,7 @@ h3. Proposed workflow
 Here is how I use Feature Flipper:
 # Develop a feature;
 # Add it to feature flipper;
-# Enabled it to yourself (it should ok to use production as all features are disabled by default);
+# Enabled it to yourself (it should be ok to use production env as all features are disabled by default);
 # Test, test, test;
 # Enable to all users;
 # After feature is stable, remove the feature that would be rendered instead of the new one.
