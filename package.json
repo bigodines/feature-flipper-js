@@ -1,6 +1,6 @@
 {
   "name": "feature-flipper-js",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A Feature Flipper for nodejs",
   "preferGlobal": "true",
   "main": "feature_flipper.js",
@@ -15,7 +15,8 @@
   },
   "dependencies": {
     "lodash": "3.7.0",
-    "redis": "0.7.1"
+    "memjs": "^0.8.7",
+    "redis": "^0.7.1"
   },
   "devDependencies": {
     "gulp": "3.9.0",
