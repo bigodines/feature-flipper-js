@@ -1,20 +1,20 @@
+"use strict";
 (function() {
-    feature_flipper = function(storage_engine) { 
-        var _self = this;
+    var feature_flipper = function(storage_engine) {
         /* internals */
         /* Feature object */
-        var _Feature = function(options) {
-            var id, description, creation, expire, enabledTo;
+        var Feature = function(options) {
+            var id, description, creation, expire, enabledTo; // jshint ignore:line
             if (typeof options !== 'object') {
                 throw new Error('please provide an option object');
             }
-            
+
             for (var i in options) {
                 this[i] = options[i];
             }
-            
+
         };
-        
+
 
         /* Feature Flipper public methods */
         return {
@@ -22,7 +22,7 @@
 
             /* create feature won't persist the new feature in the storage engine until it is saved */
             create_feature : function(options) {
-                return new _Feature(options);
+                return new Feature(options);
             },
 
             get_feature: function(feature_id, data_handler) {
@@ -46,9 +46,9 @@
                     data_handler('A feature should have at least ID and DESCRIPTION');
                     return feature;
                 }
-            
+
                 this.storage.set('feature:'+feature.id, JSON.stringify(feature), data_handler);
-                
+
                 return feature;
             },
 
@@ -103,8 +103,8 @@
                             var current_position = enabled_users.indexOf(user_id);
                             if (current_position >= 0) {
                                 enabled_users.splice(current_position,1);
-                                if(enabled_users.length === 0) { 
-                                    delete(feature.enabledTo); 
+                                if(enabled_users.length === 0) {
+                                    delete(feature.enabledTo);
                                 } else {
                                     feature.enabledTo = enabled_users;
                                 }
@@ -128,12 +128,14 @@
 
             /*Feature Flipper logic */
             check : function(/* [ all optional params ], after_check_callback(bool is_enabled) */) {
-                var feature, feature_id, context = this,
-                    argc = arguments.length, 
+                var feature_id, context = this,
+                    argc = arguments.length,
                     check_cb, after_check, check_against,
                     _global_check = function(feature) {
-                        if (feature === null) after_check.call(context, null);
-                        return (feature.enabledTo === 'all');
+			    if (feature === null) {
+				 after_check.call(context, null);
+			    }
+			    return (feature.enabledTo === 'all');
                     };
 
                 if (argc === 2) {
@@ -152,7 +154,7 @@
                     feature_id = arguments[0];
                     check_against = arguments[1];
                     after_check = arguments[2];
-                    check_cb = function(feature) { 
+                    check_cb = function(feature) {
                         if (feature === null) {
                             after_check.call(context, null);
                             return;
@@ -161,7 +163,7 @@
                         if (feature.enabledTo instanceof Array) {
                             var enabled_users = feature.enabledTo;
                             is_enabled = enabled_users.reduce(function(prev, curr, idx, arr) {
-                                if (prev === true) return true;                         
+                                if (prev === true) {  return true; }
                                 return (curr === check_against);
                             }, false);
                         }

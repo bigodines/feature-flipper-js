@@ -1,8 +1,9 @@
+"use strict";
 (function () {
   var _redis = require('redis'),
 
     ff_redis = function (port, host, options) {
-      var ret, redis = _redis.createClient(port, host, options);
+      var redis = _redis.createClient(port, host, options);
       /* public methods*/
       return {
         set: function (key, value, cb) {
