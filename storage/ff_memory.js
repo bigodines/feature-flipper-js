@@ -11,6 +11,7 @@
          **/
 
         return {
+            name: 'memory',
             set: function(key, value, cb) {
                 features[key] = value;
                 cb(null, features[key]);

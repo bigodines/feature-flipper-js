@@ -4,6 +4,7 @@
     var ff_memcache = function(servers, options) {
         var mc = _memjs.Client.create(servers, options);
         return {
+            name: 'memcache',
             set: function(key, value, cb) {
                 mc.set(key, value, cb);
             },

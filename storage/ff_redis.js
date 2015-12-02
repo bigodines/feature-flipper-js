@@ -6,6 +6,7 @@
       var redis = _redis.createClient(port, host, options);
       /* public methods*/
       return {
+        name: 'redis',
         set: function (key, value, cb) {
           redis.set(key, value, function (err, data) {
             if (!cb) {
