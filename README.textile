@@ -1,8 +1,8 @@
 !https://travis-ci.org/bigodines/feature-flipper-js.png?branch=master!:https://travis-ci.org/bigodines/feature-flipper-js
 
-h1. Repo stability: alpha (mvp complete)
+h1. Repo stability: It works but it has been abandoned.
 
-early adopters are always welcome :-)
+Use at your own risk. I'm happy to merge/review PRs but I don't intend on developing new features or keep it up to date with the latest features of node. 
 
 h2. FeatureFlipper.js
 
